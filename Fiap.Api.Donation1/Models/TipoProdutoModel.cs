@@ -3,10 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Fiap.Api.Donation1.Models
 {
+    [Table("TipoProduto")]
     public class TipoProdutoModel
     {
-        //[Key] // Notação para indicar chave primária
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Notação para gerar Id automático e incremental
+        [Key] // Notação para indicar chave primária
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Notação para gerar Id automático e incremental
         public int TipoProdutoId { get; set; }
 
         // [Column("NomeTipoProduto")] // Associa a propriedade à coluna do banco
@@ -22,5 +23,15 @@ namespace Fiap.Api.Donation1.Models
 
         [NotMapped] // Anotação para propriedade que NÃO É uma entidade do banco
         public string? Token { get; set; }
+
+
+        public TipoProdutoModel() { }
+
+        public TipoProdutoModel(int id, string nome, string descricao)
+        {
+            TipoProdutoId = id;
+            Nome = nome;
+            Descricao = descricao;
+        }
     }
 }
