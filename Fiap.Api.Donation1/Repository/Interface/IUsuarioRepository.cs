@@ -11,5 +11,9 @@ namespace Fiap.Api.Donation1.Repository.Interface
         public IList<UsuarioModel> FindAll();
 
         public void Delete(int id);
+
+        public int Insert(UsuarioModel usuarioModel);
+
+        public void Update(UsuarioModel usuarioModel);
     }
 }

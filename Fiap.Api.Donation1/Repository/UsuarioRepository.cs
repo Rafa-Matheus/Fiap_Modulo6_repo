@@ -1,6 +1,7 @@
 ﻿using Fiap.Api.Donation1.Data;
 using Fiap.Api.Donation1.Models;
 using Fiap.Api.Donation1.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.Api.Donation1.Repository
 {
@@ -17,6 +18,7 @@ namespace Fiap.Api.Donation1.Repository
         {
             var usuario = dataContext
                 .Usuarios
+                .AsNoTracking()
                 .FirstOrDefault(u => u.Senha.Equals(senha) &&
                                 u.EmailUsuario.Equals(email));
 
@@ -25,7 +27,14 @@ namespace Fiap.Api.Donation1.Repository
 
         public UsuarioModel FindById(int id)
         {
-            throw new NotImplementedException();
+            //var usuario = new UsuarioModel();
+
+            var usuario = dataContext
+                .Usuarios
+                .AsNoTracking()
+                .FirstOrDefault(u => u.UsuarioId == id);
+
+            return usuario;
         }
 
         public IList<UsuarioModel> FindAll()
@@ -56,7 +65,15 @@ namespace Fiap.Api.Donation1.Repository
                 UsuarioId = id
             };
             Delete(usuarioModel);
-        }        
+        }
+
+        public void Update(UsuarioModel usuarioModel)
+        {
+            dataContext.Usuarios.Update(usuarioModel);
+            dataContext.SaveChanges();
+
+            //return usuarioModel;
+        }
     }
 }
 
