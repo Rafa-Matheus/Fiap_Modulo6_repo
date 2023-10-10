@@ -8,7 +8,7 @@ namespace Fiap.Api.Donation1.Repository.Interface
 
         public UsuarioModel FindById(int id);
 
-        public IList<UsuarioModel> FindAll();
+        public Task<IList<UsuarioModel>> FindAll();
 
         public void Delete(int id);
 
