@@ -24,11 +24,19 @@ namespace Fiap.Api.Donation1.Models
 
         [Required]
         [MaxLength(30)]
-        public string? Regra { get; set; }
+        public string Regra { get; set; }
 
         public UsuarioModel()
         {
         }
+
+        /*public UsuarioModel(string email, string nomeUsuario, string senha, string regra)
+        {
+            NomeUsuario = nomeUsuario;
+            EmailUsuario = email;
+            Senha = senha;
+            Regra = regra;
+        }*/
 
         public UsuarioModel(int usuarioId, string email, string nomeUsuario, string senha, string regra)
         {
