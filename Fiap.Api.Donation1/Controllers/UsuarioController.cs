@@ -53,14 +53,28 @@ namespace Fiap.Api.Donation1.Controllers
             //return usuarioRepository.FindById(id);
         }
 
+
+        #region Método POST - Codificação simplificada
+        /*
+        [HttpPost]
+        public int Post([FromBody] UsuarioModel usuarioModel)
+        {
+            var retorno = usuarioRepository.Insert(usuarioModel);
+            return retorno;
+        }*/
+
+        #endregion
+
+
+        #region Método POST - Codificação mais elaborada
+        
         [HttpPost]
         public ActionResult<UsuarioModel> Post([FromBody] UsuarioModel usuarioModel)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            /*var retorno = usuarioRepository.Insert(usuarioModel);
-
-            return Created("",retorno);*/
+            // var retorno = usuarioRepository.Insert(usuarioModel); // Remover/Comentar linha
+            // return Created("",retorno); // Remover/Comentar linha
 
             try
             {
@@ -81,6 +95,9 @@ namespace Fiap.Api.Donation1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        
+        #endregion
+
 
         [HttpPut("{id:int}")]
         public ActionResult<UsuarioModel> Put([FromRoute] int id, [FromBody] UsuarioModel usuarioModel)
