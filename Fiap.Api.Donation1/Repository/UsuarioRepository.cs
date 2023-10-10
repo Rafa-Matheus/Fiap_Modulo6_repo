@@ -37,9 +37,9 @@ namespace Fiap.Api.Donation1.Repository
             return usuario;
         }
 
-        public IList<UsuarioModel> FindAll()
+        public async Task<IList<UsuarioModel>> FindAll()
         {
-            var usuarios = dataContext.Usuarios.ToList();
+            var usuarios = dataContext.Usuarios.AsNoTracking().ToList();
 
             return usuarios;
         }
