@@ -32,9 +32,9 @@ namespace Fiap.Api.Donation1.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IList<UsuarioModel>> Get()
+        public async Task<ActionResult<IList<UsuarioModel>>> Get()
         {
-            var usuarios = usuarioRepository.FindAll();
+            var usuarios = await usuarioRepository.FindAll();
 
             if (usuarios == null || usuarios.Count == 0) return NoContent();
             else return Ok(usuarios);
