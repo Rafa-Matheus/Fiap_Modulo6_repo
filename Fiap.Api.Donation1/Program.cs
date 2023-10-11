@@ -1,7 +1,10 @@
 using Fiap.Api.Donation1.Data;
 using Fiap.Api.Donation1.Repository;
 using Fiap.Api.Donation1.Repository.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,34 @@ builder.Services.AddDbContext<DataContext>(
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ITipoProdutoRepository, TipoProdutoRepository>();
 
+
+#region Autenticação
+
+var key = Encoding.ASCII.GetBytes("d98193f6 - 0c56 - 43e1 - 954a - 6efd41baed87");
+
+builder.Services.AddAuthentication(a =>
+{
+    a.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}
+    ).AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            ValidateIssuer = false,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            // LifeTimeValidator = ...,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            RequireExpirationTime = true
+        };
+    });
+#endregion
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -32,6 +63,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
