@@ -1,4 +1,5 @@
 ﻿using Fiap.Api.Donation1.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace Fiap.Api.Donation1.Models
 {
     [Table("Produto")] // Notação para indicar que classe representa tabela do banco
+    [Index(nameof(DataCadastro), IsUnique = false)]
     public class ProdutoModel
     {
         [Key] // Para indicar chave primária
@@ -49,5 +51,24 @@ namespace Fiap.Api.Donation1.Models
         // Foreign Key
         public int UsuarioId { get; set; }
 
+
+        public ProdutoModel()
+        {
+
+        }
+
+        public ProdutoModel(int produtoId, string nome, bool disponivel, string descricao, string sugestaoTroca, double valor, int usuarioId, int tipoProdutoId)
+        {
+            ProdutoId = produtoId;
+            Nome = nome;
+            Disponivel = disponivel;
+            Descricao = descricao;
+            SugestaoTroca = sugestaoTroca;
+            Valor = valor;
+            UsuarioId = usuarioId;
+            TipoProdutoId = tipoProdutoId;
+            DataCadastro = DateTime.Now;
+            DataExpiracao = DateTime.Now.AddMonths(18);
+        }
     }
 }

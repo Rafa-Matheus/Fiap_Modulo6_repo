@@ -11,7 +11,7 @@ namespace Fiap.Api.Donation1.Services
 
         public static string GetToken(UsuarioModel usuarioModel)
         {
-            byte[] secret = Encoding.ASCII.GetBytes("d98193f6 - 0c56 - 43e1 - 954a - 6efd41baed87");
+            byte[] secret = Encoding.ASCII.GetBytes(Settings.SECRET_TOKEN);
 
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
 

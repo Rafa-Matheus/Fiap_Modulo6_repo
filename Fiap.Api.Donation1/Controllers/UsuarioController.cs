@@ -35,7 +35,7 @@ namespace Fiap.Api.Donation1.Controllers
                 {
                     usuario = usuario,
                     token = token,
-                    teste = "ashuashusashu"
+                    //teste = "ashuashusashu"
                 };
 
                 return Ok(usuarioRetorno);

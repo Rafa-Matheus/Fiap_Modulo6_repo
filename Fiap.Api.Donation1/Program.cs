@@ -1,3 +1,4 @@
+using Fiap.Api.Donation1;
 using Fiap.Api.Donation1.Data;
 using Fiap.Api.Donation1.Repository;
 using Fiap.Api.Donation1.Repository.Interface;
@@ -24,7 +25,16 @@ builder.Services.AddScoped<ITipoProdutoRepository, TipoProdutoRepository>();
 
 #region Autenticação
 
-var key = Encoding.ASCII.GetBytes("d98193f6 - 0c56 - 43e1 - 954a - 6efd41baed87");
+bool CustomLifetimeValidator(DateTime? notBefore, DateTime? expires, SecurityToken tokenToValidate, TokenValidationParameters @param)
+{
+    if (expires != null)
+    {
+        return expires > DateTime.UtcNow;
+    }
+    return false;
+}
+
+var key = Encoding.ASCII.GetBytes(Settings.SECRET_TOKEN);
 
 builder.Services.AddAuthentication(a =>
 {
@@ -40,7 +50,7 @@ builder.Services.AddAuthentication(a =>
             ValidateIssuerSigningKey = true,
             ValidateIssuer = false,
             IssuerSigningKey = new SymmetricSecurityKey(key),
-            // LifeTimeValidator = ...,
+            LifetimeValidator = CustomLifetimeValidator, // Forma de validar se token está expirado
             ValidateAudience = false,
             ValidateLifetime = true,
             RequireExpirationTime = true
